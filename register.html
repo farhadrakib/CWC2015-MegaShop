@@ -1,0 +1,210 @@
+﻿<div ng-app="" ng-controller="studentController">
+	<div ng-include="'layout/head.html'"></div>
+	<body>
+ 
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong> User</strong></div>
+	<div class="span6">
+	
+	</div>
+</div>
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="index.html"><img src="themes/images/logo.png" alt="Bootsshop"/></a>
+		<form class="form-inline navbar-search" method="post" action="products.html" >
+		<input id="srchFld" class="srchTxt" type="text" />
+		  <select class="srchTxt">
+			
+		</select> 
+		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	
+	 
+	 <li ng-if="user_logged_in == true" class="">
+          <a href="dashboard.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Dashboard</span></a>
+     </li>
+	 <li ng-if="user_logged_in == false" class="">
+          <a href="register.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Sign Up</span></a>
+     </li>
+	 
+	 <li ng-if="user_logged_in == false" class="">
+	    <a href="login.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log In</span></a>
+     </li>
+	 <li ng-if="user_logged_in == true" class="">
+	 <a href="logout.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log out</span></a>
+	
+	</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- Header End====================================================================== -->
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+		
+<!--Sidebar ================================================== -->
+
+	<div id="sidebar" class="span2">
+		
+	</div>
+
+<!-- Sidebar end=============================================== -->
+	<div class="span8">
+ 
+	<h3> Registration</h3>	
+	<div class="well">
+	
+	<form class="form-horizontal" ng-submit="submit()" >
+		<h4>Your personal information</h4>
+		<input type="hidden" ng-model="register_token" value="{{ register_token.register_token }}">
+		<div class="control-group">
+			<label class="control-label" for="inputFname1">First name <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="inputFname1" ng-model="first_name" placeholder="First Name">
+			</div>
+		 </div>
+		 <div class="control-group">
+			<label class="control-label" for="inputLnam">Last name {{form_response.message}}<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="inputLnam" ng-model="last_name" placeholder="Last Name">
+			</div>
+		 </div>
+		<div class="control-group">
+		<label class="control-label" for="input_email">Email <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+		<div class="controls">
+		  <input type="text" id="input_email" ng-model="email" placeholder="Email">
+		</div>
+	  </div>
+      <div class="control-group">
+			<label class="control-label" for="city">Phone<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="city" ng-model="phone" placeholder="Phone"/> 
+			</div>
+		</div>	  
+	<div class="control-group">
+		<label class="control-label" for="inputPassword1">Password <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+		<div class="controls">
+		  <input type="password" id="inputPassword1" ng-model="password" placeholder="Password">
+		</div>
+	  </div>	  
+		<div class="control-group">
+		<label class="control-label" for="inputPassword1">Repeat Password <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+		<div class="controls">
+		  <input type="password" id="inputPassword1" placeholder="Password">
+		</div>
+	  </div>
+		<h4>Your address</h4>
+	    <div class="control-group">
+			<label class="control-label" for="address2">Address (Line 1)<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="address2" ng-model="address1" placeholder="Adress line 2"/> <span></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="address2">Address (Line 2)<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="address2" ng-model="address2" placeholder="Adress line 2"/> <span></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="city">City<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" ng-model="city" id="city" placeholder="city"/> 
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label" for="country">Country<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			<select id="country" ng-model="country" >
+				<option value="">-</option>
+				<option value="Afganistan">Afganistan</option>
+				<option value="Bangldesh">Bangldesh</option>
+				<option value="India">India</option>
+				<option value="Pakistan">Pakistan</option>
+				<option value="Sri-Lanka">Sri-Lanka</option>
+				<option value="USA">USA </option>
+			
+			</select>
+			</div>
+		</div>	
+
+	<p><sup class="requir"><i class="icon-asterisk"></i></sup>Required field	</p>
+	
+	<div class="control-group">
+			<div class="controls">
+				<input type="hidden" name="email_create" value="1">
+				<input type="hidden" name="is_new_customer" value="1">
+				<input class="btn btn-large btn-success" type="submit"  value="Register" />
+			</div>
+		</div>		
+	</form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="span2">
+	</div>
+
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+ function studentController($scope,$http) {
+ 
+   if ( window.localStorage['user_token'] ){
+
+      $scope.user_logged_in = true;
+ }else {
+
+      $scope.user_logged_in = false;
+ }
+ 
+  var url="api/user/register_token";
+   $http.post(url).success( function(response) {
+      $scope.register_token = response; 
+	  
+  });
+ 
+  
+  $scope.submit = function() {
+   var url="api/user/add_user";
+       $http.post(url,{ first_name :$scope.first_name, register_token:$scope.register_token.register_token,
+	                     last_name :$scope.last_name , 
+	                          email: $scope.email ,
+						   password: $scope.password,
+						   phone: $scope.phone, country: $scope.country, address1: $scope.address1,address2: $scope.address2,city: $scope.city
+						   }).success( function(response) {
+           $scope.form_response = response;
+           if ( $scope.form_response.success == 1 ) {
+		   
+		      window.location = 'login.html';
+		   } 
+       });
+  
+ };
+  
+  
+}
+
+</script>
+

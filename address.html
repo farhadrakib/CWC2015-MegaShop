@@ -1,0 +1,180 @@
+﻿<div ng-app="" ng-controller="InfoController">
+	<div ng-include="'layout/head.html'"></div>
+<body>
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong> User</strong></div>
+	
+</div>
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="index.html"><img src="themes/images/logo.png" alt="Bootsshop"/></a>
+		<form class="form-inline navbar-search" method="post" action="products.html" >
+		<input id="srchFld" class="srchTxt" type="text" />
+		  <select class="srchTxt">
+			
+		</select> 
+		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	
+	 
+	 <li class="">
+          <a href="dashboard.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Dashboard</span></a>
+     </li>
+	 
+	 <li >
+	    <a href="logout.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log out</span></a>
+     </li>
+	 
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- Header End====================================================================== -->
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+		
+
+		
+<!--Sidebar ================================================== -->
+
+	<div class="span3 bs-docs-sidebar">
+	<ul class="nav nav-list bs-docs-sidenav">
+  <li class="nav-header">Dashboard</li>
+   <li class="divider"></li>
+        
+		  <li ><a href="basic_info.html">Basic Info<i class="icon-chevron-right"></i></a></li>
+		  <li class="active"><a href="address.html">Address<i class="icon-chevron-right"></i></a></li>
+		  <li><a href="logout.html">Logout <i class="icon-chevron-right"></i></a></li>
+   </ul>
+
+	</div>
+	
+
+<!-- Sidebar end=============================================== -->
+	<div class="span8">
+ 
+	<h3>{{ form_response.message }}</h3>	
+	<div class="well">
+	
+	<form class="form-horizontal" ng-submit="submit()">
+		<h4>Your Address</h4>
+		
+		<div class="control-group">
+			<label class="control-label" for="address2">Address (Line 1)<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="address2" ng-model="address1" placeholder="Adress line 2"/> <span></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="address2">Address (Line 2)<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="address2" ng-model="address2" placeholder="Adress line 2"/> <span></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="city">City<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" ng-model="city" id="city" placeholder="city"/> 
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label" for="country">Country<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			<select id="country" ng-model="country" >
+				<option value="">-</option>
+				<option value="Afganistan">Afganistan</option>
+				<option value="Bangldesh">Bangldesh</option>
+				<option value="India">India</option>
+				<option value="Pakistan">Pakistan</option>
+				<option value="Sri-Lanka">Sri-Lanka</option>
+				<option value="USA">USA </option>
+			
+			</select>
+			</div>
+		</div>	
+		
+	
+	<div class="control-group">
+			<div class="controls">
+				<input type="hidden" name="email_create" value="1">
+				<input type="hidden" name="is_new_customer" value="1">
+				<input class="btn btn-large btn-success" type="submit" value="Update " />
+			</div>
+		</div>		
+	</form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="span1">
+	</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+ function InfoController($scope,$http) {
+
+
+ if ( window.localStorage['user_token'] ){
+
+      $scope.user_logged_in = true;
+	  $scope.user_token = window.localStorage['user_token'];
+	
+	 
+ }else {
+
+      $scope.user_logged_in = false;
+	   window.location = 'login.html';
+ }
+ 
+ 
+   var url="api/user/get_user_info";
+   $http.post(url, { user_token : $scope.user_token }).success( function(response) {
+      $scope.user_response = response[0]; 
+	  $scope.address1 = $scope.user_response.address1 ;
+	  $scope.address2 = $scope.user_response.address2 ;
+	  $scope.city = $scope.user_response.city ;
+	  $scope.country = $scope.user_response.country ;
+	 
+	
+  });
+  
+  $scope.submit = function() {
+   var url="api/user/update_address";
+       $http.post(url,{ address1:$scope.address1, user_token:$scope.user_token,
+	                     address2  :$scope.address2  , 
+	                          city: $scope.city ,
+						   country: $scope.country
+						   }).success( function(response) {
+           $scope.form_response = response;
+           if ( $scope.form_response.success == 1 ) {
+		   
+		     $scope.form_response.message = 'Address Info Updated';
+		   }
+       });
+  
+ };
+ 
+} 
+
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<div ng-app="" ng-controller="LogoutController">
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+ function LogoutController($scope,$http) {
+ 
+   $scope.user_token =  window.localStorage['user_token'];
+
+   
+    var url="api/user/logout";
+   $http.post(url , {user_token:$scope.user_token}).success( function(response) {
+      $scope.logout_response = response; 
+
+	  delete window.localStorage['user_token'];
+	      
+	 
+	  
+	   window.location = 'index.html';
+  });
+ 
+ 
+}
+
+</script>

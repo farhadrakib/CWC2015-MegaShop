@@ -1,0 +1,71 @@
+<body>
+  <div ng-app="" ng-controller="HomeController">
+	<div ng-include="'layout/head.html'"></div>
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong> User</strong></div>
+	<div class="span6">
+	
+	</div>
+</div>
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="index.html"><img src="themes/images/logo.png" alt="Bootsshop"/></a>
+		<form class="form-inline navbar-search" method="post" action="products.html" >
+		<input id="srchFld" class="srchTxt" type="text" />
+		  <select class="srchTxt">
+			
+		</select> 
+		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	
+	 
+	 <li ng-if="user_logged_in == true" class="">
+          <a href="basic_info.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Dashboard</span></a>
+     </li>
+	 <li ng-if="user_logged_in == false" class="">
+          <a href="register.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Sign Up</span></a>
+     </li>
+	 <li ng-if="user_logged_in == true" class="">
+	    <a href="logout.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log out</span></a>
+     </li>
+	 <li ng-if="user_logged_in == false" class="">
+	    <a href="login.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log In</span></a>
+     </li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+ function HomeController($scope,$http) {
+
+
+ if ( window.localStorage['user_token'] ){
+
+      $scope.user_logged_in = true;
+ }else {
+
+      $scope.user_logged_in = false;
+ }
+ 
+} 
+
+</script>
+
+</body>
+</html>

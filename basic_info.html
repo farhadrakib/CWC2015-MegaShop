@@ -1,0 +1,183 @@
+﻿<div ng-app="" ng-controller="InfoController">
+	<div ng-include="'layout/head.html'"></div>
+<body>
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong> User</strong></div>
+	
+</div>
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="index.html"><img src="themes/images/logo.png" alt="Bootsshop"/></a>
+		<form class="form-inline navbar-search" method="post" action="products.html" >
+		<input id="srchFld" class="srchTxt" type="text" />
+		  <select class="srchTxt">
+			
+		</select> 
+		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	
+	 
+	 <li class="">
+          <a href="dashboard.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Dashboard</span></a>
+     </li>
+	 
+	 <li >
+	    <a href="logout.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log out</span></a>
+     </li>
+	 
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- Header End====================================================================== -->
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+		
+
+		
+<!--Sidebar ================================================== -->
+
+	<div class="span3 bs-docs-sidebar">
+	<ul class="nav nav-list bs-docs-sidenav">
+  <li class="nav-header">Dashboard</li>
+   <li class="divider"></li>
+        
+		  <li class="active"><a href="basic_info.html">Basic Info<i class="icon-chevron-right"></i></a></li>
+		  <li><a href="address.html">Address<i class="icon-chevron-right"></i></a></li>
+		  <li><a href="logout.html">Logout <i class="icon-chevron-right"></i></a></li>
+   </ul>
+
+	</div>
+	
+
+<!-- Sidebar end=============================================== -->
+	<div class="span8">
+ 
+	<h3>{{ form_response.message}}</h3>	
+	<div class="well">
+	
+	<form class="form-horizontal" ng-submit="submit()">
+		<h4>Your Basic Information</h4>
+		
+		<div class="control-group">
+			<label class="control-label" for="inputFname1">First name {{ user_response.first_name }}<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="inputFname1" ng-model="first_name" value="{{ user_response.first_name }}" placeholder="First Name">
+			</div>
+		 </div>
+		 <div class="control-group">
+			<label class="control-label" for="inputLnam">Last name <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="inputLnam" ng-model="last_name" placeholder="Last Name" value="{{ user_response.last_name }}">
+			</div>
+		 </div>
+		<div class="control-group">
+		<label class="control-label" for="input_email">Email <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+		<div class="controls">
+		  <input type="text" id="input_email" ng-model="email" placeholder="Email" value="{{ user_response.email }}">
+		</div>
+	  </div>	  
+	<div class="control-group">
+		<label class="control-label" for="inputPassword1">Password <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+		<div class="controls">
+		  <input type="password" id="inputPassword1" ng-model="password" placeholder="Password" value="{{ user_response.password }}">
+		</div>
+	  </div>
+      <div class="control-group">
+		<label class="control-label" for="inputPassword1">Password Again<sup class="requir"><i class="icon-asterisk"></i></sup></label>
+		<div class="controls">
+		  <input type="password" id="inputPassword1" placeholder="Password" value="{{ user_response.password }}">
+		</div>
+	  </div>	  
+	<div class="control-group">
+			<label class="control-label" for="inputFname1">Phone <sup class="requir"><i class="icon-asterisk"></i></sup></label>
+			<div class="controls">
+			  <input type="text" id="inputFname1" ng-model="phone" value="{{ user_response.phone }}" placeholder="Phone">
+			</div>
+	</div>
+		
+	
+	<div class="control-group">
+			<div class="controls">
+				<input type="hidden" name="email_create" value="1">
+				<input type="hidden" name="is_new_customer" value="1">
+				<input class="btn btn-large btn-success" type="submit" value="Update " />
+			</div>
+		</div>		
+	</form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="span1">
+	</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+ function InfoController($scope,$http) {
+
+
+ if ( window.localStorage['user_token'] ){
+
+      $scope.user_logged_in = true;
+	  $scope.user_token = window.localStorage['user_token'];
+	
+	 
+ }else {
+
+      $scope.user_logged_in = false;
+	   window.location = 'login.html';
+ }
+ 
+ 
+   var url="api/user/get_user_info";
+   $http.post(url, { user_token : $scope.user_token }).success( function(response) {
+      $scope.user_response = response[0]; 
+	  $scope.first_name = $scope.user_response.first_name ;
+	  $scope.last_name = $scope.user_response.last_name ;
+	  $scope.email = $scope.user_response.email ;
+	  $scope.password = $scope.user_response.password ;
+	  $scope.phone = $scope.user_response.phone ;
+	
+  });
+  
+  $scope.submit = function() {
+   var url="api/user/update_basic_info";
+       $http.post(url,{ first_name :$scope.first_name, user_token:$scope.user_token,
+	                     last_name :$scope.last_name , 
+	                          email: $scope.email ,
+						   password: $scope.password,
+						   phone: $scope.phone
+						   }).success( function(response) {
+           $scope.form_response = response;
+           if ( $scope.form_response.success == 1 ) {
+		   
+		     $scope.form_response.message = 'Basic Info Updated';
+		   }
+       });
+  
+ };
+ 
+} 
+
+</script>
+</body>
+</html>

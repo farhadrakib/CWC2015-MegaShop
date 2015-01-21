@@ -1,0 +1,144 @@
+<div ng-app="" ng-controller="studentController">
+	<div ng-include="'layout/head.html'"></div>
+	<body>
+ 
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong> User</strong></div>
+	<div class="span6">
+	
+	</div>
+</div>
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="index.html"><img src="themes/images/logo.png" alt="Bootsshop"/></a>
+		<form class="form-inline navbar-search" method="post" action="products.html" >
+		<input id="srchFld" class="srchTxt" type="text" />
+		  <select class="srchTxt">
+			
+		</select> 
+		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	
+	 
+	 <li ng-if="user_logged_in == true" class="">
+          <a href="dashboard.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Dashboard</span></a>
+     </li>
+	 <li ng-if="user_logged_in == false" class="">
+          <a href="register.html" role="button" style="padding-right:0"><span class="btn btn-large btn-info"><i class="icon-home"></i>Sign Up</span></a>
+     </li>
+	 
+	 <li ng-if="user_logged_in == false" class="">
+	    <a href="login.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log In</span></a>
+     </li>
+	 <li ng-if="user_logged_in == true" class="">
+	 <a href="logout.html" role="button"  style="padding-right:0"><span class="btn btn-large btn-success"><i class="icon-off"></i>Log out</span></a>
+	
+	</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- Header End====================================================================== -->
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+		
+<!--Sidebar ================================================== -->
+
+	<div id="sidebar" class="span2">
+		
+	</div>
+
+<!-- Sidebar end=============================================== -->
+	<div class="span9">
+   
+	<h3 style="margin-left:240px"> Login</h3>	
+	<hr class="soft"/>
+	
+	<div class="row">
+	
+
+		<div class="span1"> &nbsp;</div> 
+		<div class="span4">
+			<div class="well">
+			<h5>{{error_message}}</h5>
+			<form ng-submit="submit()" >
+			  <div class="control-group">
+				<label class="control-label" for="inputEmail1">Email </label>
+				<div class="controls">
+				  <input class="span3"  type="text" ng-model="email" id="inputEmail1" placeholder="Email">
+				</div>
+			  </div>
+			  <div class="control-group">
+				<label class="control-label" for="inputPassword1">Password</label>
+				<div class="controls">
+				  <input type="password" class="span3" ng-model="password"  id="inputPassword1" placeholder="Password">
+				</div>
+			  </div>
+			  <div class="control-group">
+				<div class="controls">
+				  <button type="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>
+				</div>
+			  </div>
+			</form>
+		</div>
+		</div>
+	</div>	
+	
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="span2">
+	</div>
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+ function studentController($scope,$http) {
+ 
+   if ( window.localStorage['user_token'] ){
+
+      $scope.user_logged_in = true;
+ }else {
+
+      $scope.user_logged_in = false;
+ }
+ 
+
+  $scope.submit = function() {
+   var url="api/user/login";
+       $http.post(url,{email: $scope.email , password: $scope.password}).success( function(response) {
+           $scope.form_response = response; 
+		   if ( $scope.form_response.success == 1 ) {
+             window.localStorage['user_token'] = $scope.form_response.user_token;
+			 window.location = 'index.html';
+           } else {
+		   
+		     $scope.error_message = 'Invalid Email or Password Combination';
+		   }
+       });
+  
+ };
+  
+  
+}
+
+</script>
+
